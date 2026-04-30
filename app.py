@@ -44,6 +44,25 @@ app = Flask(__name__)
 CORS(app)
 
 
+@app.get("/")
+def home():
+        return """
+        <html>
+            <head>
+                <title>Sarv Sampoorna Kisan Mitra API</title>
+            </head>
+            <body>
+                <h1>Sarv Sampoorna Kisan Mitra API</h1>
+                <p>The backend is running successfully.</p>
+                <ul>
+                    <li><a href="/health">Health check</a></li>
+                    <li>POST /predict for image prediction</li>
+                </ul>
+            </body>
+        </html>
+        """
+
+
 @app.get("/health")
 def health():
     return jsonify(
