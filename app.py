@@ -4,6 +4,7 @@ from pathlib import Path
 
 import numpy as np
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 from PIL import Image
 from tensorflow import keras
 
@@ -40,6 +41,7 @@ model = keras.models.load_model(MODEL_PATH)
 labels = load_labels(LABELS_PATH)
 
 app = Flask(__name__)
+CORS(app)
 
 
 @app.get("/health")
