@@ -1,4 +1,5 @@
 import json
+import os
 from io import BytesIO
 from pathlib import Path
 
@@ -6,6 +7,11 @@ import numpy as np
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from PIL import Image
+
+os.environ.setdefault("TF_CPP_MIN_LOG_LEVEL", "2")
+os.environ.setdefault("TF_NUM_INTEROP_THREADS", "1")
+os.environ.setdefault("TF_NUM_INTRAOP_THREADS", "1")
+
 from tensorflow import keras
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -37,7 +43,7 @@ def preprocess_image(image_bytes: bytes) -> np.ndarray:
 if not MODEL_PATH.exists():
     raise FileNotFoundError(f"Model file not found: {MODEL_PATH}")
 
-model = keras.models.load_model(MODEL_PATH)
+model = keras.models.load_model(MODEL_PATH, compile=False)
 labels = load_labels(LABELS_PATH)
 
 app = Flask(__name__)
